@@ -24,3 +24,12 @@ pip install -r requirements.txt
 # Usage
 
 `python main.py -s your-search-term`
+
+Args:
+```
+-s --search: Searches for any string.
+-r --rating: Searches within this rating or lower - g, pg, pg-13 or r
+-n --num: Limits the search to this many possibilities.
+-R --random-disabled: Get the top result. This can be useful to verify you are hitting the same results. Note: This disables copying to clipboard.
+-g --github: Style the copied output to a github comment (![your-search-term][output-url])
+```

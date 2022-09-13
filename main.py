@@ -53,13 +53,13 @@ def main(argv):
     github=False
 
     try:
-        opts, args = getopt.getopt(argv,"hs:r:n:R:g:",["search=", "rating=", "num=", "random=", "github="])
+        opts, args = getopt.getopt(argv,"hs:r:n:R:g",["search=", "rating=", "num=", "random-disabled", "github"])
     except getopt.GetoptError:
-        print('main.py -s <search> -r <rating> -n <number> -R <random> -g <github>')
+        print('main.py -s <search> -r <rating> -n <number> -R <random-disabled> -g <github>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('main.py -s <search> -r <rating> -n <number> -R <random> -g <github>')
+            print('main.py -s <search> -r <rating> -n <number> -R <random-disabled> -g <github>')
             sys.exit(2)
         elif opt in ("-s", "--search"):
             s = arg
@@ -67,10 +67,10 @@ def main(argv):
             r = arg
         elif opt in ("-n", "--num"):
             num = arg
-        elif opt in ("-R", "--random"):
-            random = arg
+        elif opt in ("-R", "--random-disable"):
+            random = False
         elif opt in ("-g", "--github"):
-            github = arg
+            github = True
     generate_giphy(s,r,int(num),random,github)
 
 if __name__ == "__main__":
