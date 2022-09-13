@@ -7,7 +7,7 @@ Grabs a gif from giphy, shows you the name and url of the gif and copies the url
 Clone this repo
 
 ```
-git clone --
+git clone git@github.com:TimothyFothergill/giphy2clippy.git
 ```
 
 Make a .env file and add:
