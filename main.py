@@ -9,7 +9,7 @@ from random import randrange
 from dotenv import load_dotenv
 load_dotenv()
 
-def generate_giphy(query, rating="g", num=10, random=True):
+def generate_giphy(query, rating="g", num=10, random=True, github=False):
     url = "http://api.giphy.com/v1/gifs/search"
     params = parse.urlencode({
         "q"         : query,
@@ -30,7 +30,11 @@ def generate_giphy(query, rating="g", num=10, random=True):
             )
             clip = json.dumps(data["data"][n]["images"]["original"]["url"])
             clip = clip.strip('\"')
-            pyperclip.copy(clip)
+            if(github):
+                pyperclip.copy("![" + query + "](" + clip + ")")
+            else:
+                pyperclip.copy(clip)
+
     else:
         for n in range(num):
             with request.urlopen("".join((url, "?", params))) as response:
@@ -42,19 +46,32 @@ def generate_giphy(query, rating="g", num=10, random=True):
                 )
 
 def main(argv):
+    s = "LGTM"
+    r = "g"
+    num = 10
+    random=True
+    github=False
+
     try:
-        opts, args = getopt.getopt(argv,"hs:",["search="])
+        opts, args = getopt.getopt(argv,"hs:r:n:R:g:",["search=", "rating=", "num=", "random=", "github="])
     except getopt.GetoptError:
-        print('main.py -s <search>')
+        print('main.py -s <search> -r <rating> -n <number> -R <random> -g <github>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('main.py -s <search>')
+            print('main.py -s <search> -r <rating> -n <number> -R <random> -g <github>')
             sys.exit(2)
         elif opt in ("-s", "--search"):
-            generate_giphy(arg)
-        else:
-            generate_giphy("LGTM")        
+            s = arg
+        elif opt in ("-r", "--rating"):
+            r = arg
+        elif opt in ("-n", "--num"):
+            num = arg
+        elif opt in ("-R", "--random"):
+            random = arg
+        elif opt in ("-g", "--github"):
+            github = arg
+    generate_giphy(s,r,int(num),random,github)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
